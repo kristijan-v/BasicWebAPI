@@ -1,0 +1,156 @@
+{
+    "swagger": 2.0,
+    "info": {
+        "title": "Basic Web API Kristijan V.",
+        "version": "1.0.0"
+    },
+    "basePatch": "/",
+    "paths": {
+        "/companies": {
+          "get": {
+            "summary": "Get all companies",
+            "responses": {
+              "200": {
+                "description": "Successful operation",
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/definitions/Company"
+                  }
+                }
+              }
+            }
+          },
+          "post": {
+            "summary": "Create a new company",
+            "parameters": [
+              {
+                "name": "body",
+                "in": "body",
+                "required": true,
+                "schema": {
+                  "$ref": "#/definitions/Company"
+                }
+              }
+            ],
+            "responses": {
+              "200": {
+                "description": "Successful operation",
+                "schema": {
+                  "$ref": "#/definitions/Company"
+                }
+              }
+            }
+          }
+        },
+        "/countries": {
+          "get": {
+            "summary": "Get all countries",
+            "responses": {
+              "200": {
+                "description": "Successful operation",
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/definitions/Country"
+                  }
+                }
+              }
+            }
+          },
+          "post": {
+            "summary": "Create a new country",
+            "parameters": [
+              {
+                "name": "body",
+                "in": "body",
+                "required": true,
+                "schema": {
+                  "$ref": "#/definitions/Country"
+                }
+              }
+            ],
+            "responses": {
+              "200": {
+                "description": "Successful operation",
+                "schema": {
+                  "$ref": "#/definitions/Country"
+                }
+              }
+            }
+          }
+        },
+        "/contacts": {
+          "get": {
+            "summary": "Get all contacts",
+            "responses": {
+              "200": {
+                "description": "Successful operation",
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/definitions/Contact"
+                  }
+                }
+              }
+            }
+          },
+          "post": {
+            "summary": "Create a new contact",
+            "parameters": [
+              {
+                "name": "body",
+                "in": "body",
+                "required": true,
+                "schema": {
+                  "$ref": "#/definitions/Contact"
+                }
+              }
+            ],
+            "responses": {
+              "200": {
+                "description": "Successful operation",
+                "schema": {
+                  "$ref": "#/definitions/Contact"
+                }
+              }
+            }
+          }
+        }
+      },
+      "definitions": {
+        "Company": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string"
+            }
+          }
+        },
+        "Country": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string"
+            }
+          }
+        },
+        "Contact": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string"
+            },
+            "email": {
+              "type": "string"
+            },
+            "CompanyId": {
+              "type": "integer"
+            },
+            "CountryId": {
+              "type": "integer"
+            }
+          }
+        }
+      }
+    }
