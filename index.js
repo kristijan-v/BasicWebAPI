@@ -14,7 +14,7 @@ const sequelize = new Sequelize({
   dialect: 'mysql',
   username: 'root',
   password: 'password',
-  database: 'your_database_name',
+  database: 'demo_database',
 });
 
 //Models
