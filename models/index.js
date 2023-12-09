@@ -83,12 +83,12 @@ app.get('/companies' , async (req, res) => {
   res.json(companies);
 });
 
-app.get('countries' , async (req, res) => {
+app.get('/countries' , async (req, res) => {
   const countries = await Country.findAll();
   res.json(countries);
 });
 
-app.gey('/contacts', async (req, res) => {
+app.get('/contacts', async (req, res) => {
   const contacts = await Contact.findAll({
     include: [Company, Country],
   });
@@ -96,5 +96,100 @@ app.gey('/contacts', async (req, res) => {
 });
 
 // Update
-//Todo it later!
+app.put('/companies/:id', async (req, res) => {
+  const { id } = req.params;
+  try {
+    const [updated] = await Company.update(req.body, {
+      where: { id: id },
+    });
+    if (updated) {
+      const updatedCompany = await Company.findOne({ where: { id: id } });
+      res.json(updatedCompany);
+    } else {
+      res.status(404).json({ message: 'Company not found' });
+    }
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
 
+app.put('/countries/:id', async (req, res) => {
+  const { id } = req.params;
+  try {
+    const [updated] = await Country.update(req.body, {
+      where: { id: id },
+    });
+    if (updated) {
+      const updatedCountry = await Country.findOne({ where: { id: id } });
+      res.json(updatedCountry);
+    } else {
+      res.status(404).json({ message: 'Country not found' });
+    }
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
+app.put('/contacts/:id', async (req, res) => {
+  const { id } = req.params;
+  try {
+    const [updated] = await Contact.update(req.body, {
+      where: { id: id },
+    });
+    if (updated) {
+      const updatedContact = await Contact.findOne({
+        where: { id: id },
+        include: [Company, Country],
+      });
+      res.json(updatedContact);
+    } else {
+      res.status(404).json({ message: 'Contact not found' });
+    }
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
+// Delete
+app.delete('/companies/:id', async (req, res) => {
+  const { id } = req.params;
+  try {
+    const deletedCompany = await Company.destroy({
+      where: { id: id },
+    });
+    res.json({ message: 'Company deleted successfully' });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
+app.delete('/countries/:id', async (req, res) => {
+  const { id } = req.params;
+  try {
+    const deletedCountry = await Country.destroy({
+      where: { id: id },
+    });
+    res.json({ message: 'Country deleted successfully' });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
+app.delete('/contacts/:id', async (req, res) => {
+  const { id } = req.params;
+  try {
+    const deletedContact = await Contact.destroy({
+      where: { id: id },
+    });
+    res.json({ message: 'Contact deleted successfully' });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
+// Swagger
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
+
+app.listen(port, () => {
+  console.log(`Server is running on http://localhost:${port}`);
+});
