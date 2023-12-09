@@ -1,156 +1,441 @@
 {
-    "swagger": 2.0,
-    "info": {
-        "title": "Basic Web API Kristijan V.",
-        "version": "1.0.0"
+  "swagger": "2.0",
+  "info": {
+    "version": "1.0.0",
+    "title": "Basic Web API Kristijan V.",
+    "description": "This is a solution to the interwiev exam!"
+  },
+  "host": "localhost:3000",
+  "basePath": "/",
+  "tags": [
+    {
+      "name": "Company",
+      "description": "Operations related to companies"
     },
-    "basePatch": "/",
-    "paths": {
-        "/companies": {
-          "get": {
-            "summary": "Get all companies",
-            "responses": {
-              "200": {
-                "description": "Successful operation",
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/definitions/Company"
-                  }
-                }
-              }
-            }
-          },
-          "post": {
-            "summary": "Create a new company",
-            "parameters": [
-              {
-                "name": "body",
-                "in": "body",
-                "required": true,
-                "schema": {
-                  "$ref": "#/definitions/Company"
-                }
-              }
-            ],
-            "responses": {
-              "200": {
-                "description": "Successful operation",
-                "schema": {
-                  "$ref": "#/definitions/Company"
-                }
-              }
+    {
+      "name": "Country",
+      "description": "Operations related to countries"
+    },
+    {
+      "name": "Contact",
+      "description": "Operations related to contacts"
+    }
+  ],
+  "schemes": ["http"],
+  "paths": {
+    "/companies": {
+      "post": {
+        "tags": ["Company"],
+        "summary": "Create a new company",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/CompanyInput"
             }
           }
-        },
-        "/countries": {
-          "get": {
-            "summary": "Get all countries",
-            "responses": {
-              "200": {
-                "description": "Successful operation",
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/definitions/Country"
-                  }
-                }
-              }
+        ],
+        "responses": {
+          "200": {
+            "description": "Company created successfully",
+            "schema": {
+              "$ref": "#/definitions/Company"
             }
           },
-          "post": {
-            "summary": "Create a new country",
-            "parameters": [
-              {
-                "name": "body",
-                "in": "body",
-                "required": true,
-                "schema": {
-                  "$ref": "#/definitions/Country"
-                }
-              }
-            ],
-            "responses": {
-              "200": {
-                "description": "Successful operation",
-                "schema": {
-                  "$ref": "#/definitions/Country"
-                }
-              }
-            }
-          }
-        },
-        "/contacts": {
-          "get": {
-            "summary": "Get all contacts",
-            "responses": {
-              "200": {
-                "description": "Successful operation",
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/definitions/Contact"
-                  }
-                }
-              }
-            }
-          },
-          "post": {
-            "summary": "Create a new contact",
-            "parameters": [
-              {
-                "name": "body",
-                "in": "body",
-                "required": true,
-                "schema": {
-                  "$ref": "#/definitions/Contact"
-                }
-              }
-            ],
-            "responses": {
-              "200": {
-                "description": "Successful operation",
-                "schema": {
-                  "$ref": "#/definitions/Contact"
-                }
-              }
-            }
+          "500": {
+            "description": "Internal Server Error"
           }
         }
       },
-      "definitions": {
-        "Company": {
-          "type": "object",
-          "properties": {
-            "name": {
-              "type": "string"
+      "get": {
+        "tags": ["Company"],
+        "summary": "Get all companies",
+        "responses": {
+          "200": {
+            "description": "List of companies",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Company"
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      },
+      "put": {
+        "tags": ["Company"],
+        "summary": "Update an existing company",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "integer",
+            "description": "ID of the company to update"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/CompanyInput"
             }
           }
-        },
-        "Country": {
-          "type": "object",
-          "properties": {
-            "name": {
-              "type": "string"
+        ],
+        "responses": {
+          "200": {
+            "description": "Company updated successfully",
+            "schema": {
+              "$ref": "#/definitions/Company"
+            }
+          },
+          "404": {
+            "description": "Company not found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      },
+      "delete": {
+        "tags": ["Company"],
+        "summary": "Delete an existing company",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "integer",
+            "description": "ID of the company to delete"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Company deleted successfully"
+          },
+          "404": {
+            "description": "Company not found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/countries": {
+      "post": {
+        "tags": ["Country"],
+        "summary": "Create a new country",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/CountryInput"
             }
           }
-        },
-        "Contact": {
-          "type": "object",
-          "properties": {
-            "name": {
-              "type": "string"
-            },
-            "email": {
-              "type": "string"
-            },
-            "CompanyId": {
-              "type": "integer"
-            },
-            "CountryId": {
-              "type": "integer"
+        ],
+        "responses": {
+          "200": {
+            "description": "Country created successfully",
+            "schema": {
+              "$ref": "#/definitions/Country"
             }
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      },
+      "get": {
+        "tags": ["Country"],
+        "summary": "Get all countries",
+        "responses": {
+          "200": {
+            "description": "List of countries",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Country"
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      },
+      "put": {
+        "tags": ["Country"],
+        "summary": "Update an existing country",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "integer",
+            "description": "ID of the country to update"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/CountryInput"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Country updated successfully",
+            "schema": {
+              "$ref": "#/definitions/Country"
+            }
+          },
+          "404": {
+            "description": "Country not found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      },
+      "delete": {
+        "tags": ["Country"],
+        "summary": "Delete an existing country",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "integer",
+            "description": "ID of the country to delete"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Country deleted successfully"
+          },
+          "404": {
+            "description": "Country not found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/contacts": {
+      "post": {
+        "tags": ["Contact"],
+        "summary": "Create a new contact",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/ContactInput"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Contact created successfully",
+            "schema": {
+              "$ref": "#/definitions/Contact"
+            }
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      },
+      "get": {
+        "tags": ["Contact"],
+        "summary": "Get all contacts",
+        "responses": {
+          "200": {
+            "description": "List of contacts",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Contact"
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      },
+      "put": {
+        "tags": ["Contact"],
+        "summary": "Update an existing contact",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "integer",
+            "description": "ID of the contact to update"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/ContactInput"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Contact updated successfully",
+            "schema": {
+              "$ref": "#/definitions/Contact"
+            }
+          },
+          "404": {
+            "description": "Contact not found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      },
+      "delete": {
+        "tags": ["Contact"],
+        "summary": "Delete an existing contact",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "integer",
+            "description": "ID of the contact to delete"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Contact deleted successfully"
+          },
+          "404": {
+            "description": "Contact not found"
+          },
+          "500": {
+            "description": "Internal Server Error"
           }
         }
       }
     }
+  },
+  "definitions": {
+    "CompanyInput": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        }
+      }
+    },
+    "Company": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer"
+        },
+        "name": {
+          "type": "string"
+        }
+      }
+    },
+    "definitions": {
+      "CompanyInput": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          }
+        },
+        "required": ["name"]
+      },
+      "Company": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer"
+          },
+          "name": {
+            "type": "string"
+          }
+        }
+      },
+      "CountryInput": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          }
+        },
+        "required": ["name"]
+      },
+      "Country": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer"
+          },
+          "name": {
+            "type": "string"
+          }
+        }
+      },
+      "ContactInput": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "email": {
+            "type": "string",
+            "format": "email"
+          },
+          "CompanyId": {
+            "type": "integer"
+          },
+          "CountryId": {
+            "type": "integer"
+          }
+        },
+        "required": ["name", "email", "CompanyId", "CountryId"]
+      },
+      "Contact": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer"
+          },
+          "name": {
+            "type": "string"
+          },
+          "email": {
+            "type": "string",
+            "format": "email"
+          },
+          "Company": {
+            "$ref": "#/definitions/Company"
+          },
+          "Country": {
+            "$ref": "#/definitions/Country"
+          }
+        }
+      }
+    }
+  }}
